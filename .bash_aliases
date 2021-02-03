@@ -1,6 +1,0 @@
-alias la='ls -lahF'
-alias xclip='xclip -selection clipboard'
-alias xpaste='xclip -o -selection clipboard'
-alias nano='vim'
-alias more='less'
-alias ..='cd ..'
