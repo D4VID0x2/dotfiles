@@ -112,8 +112,8 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8"
 export EDITOR='nvim'
 export TERM=screen-256color
 
-if [ -f ~/.shell_aliases ]; then
-    source ~/.shell_aliases
+if [ -f ~/.config/shell_aliases ]; then
+    source ~/.config/shell_aliases
 fi
 
 # setopt GLOBdots
