@@ -37,7 +37,7 @@ ZSH_THEME="intheloop"
 # DISABLE_UPDATE_PROMPT="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+export UPDATE_ZSH_DAYS=21
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 # DISABLE_MAGIC_FUNCTIONS=true
@@ -49,7 +49,7 @@ ZSH_THEME="intheloop"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 # COMPLETION_WAITING_DOTS="true"
@@ -75,13 +75,14 @@ ZSH_THEME="intheloop"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting) 
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#666666,underline"
+#ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#666666,underline"
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8"
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -109,15 +110,15 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#666666,underline"
 #
 
 export EDITOR='nvim'
+export TERM=screen-256color
 
-if [ -f ~/.config/shell_aliases ]; then
-    source ~/.config/shell_aliases
+if [ -f ~/.shell_aliases ]; then
+    source ~/.shell_aliases
 fi
 
-PATH=$PATH:$HOME/.local/bin
-
-# setopt GLOBdots # wildcard match files starting with .
+# setopt GLOBdots
 
 eval $(thefuck --alias)
 
-bindkey '^ ' autosuggest-accept # accept suggestion with ctrl-space
+bindkey '^ ' autosuggest-accept  # accept suggestion with ctrl-space
+
