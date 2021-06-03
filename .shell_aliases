@@ -38,6 +38,5 @@ alias batman="MANPAGER=\"sh -c 'col -bx | bat -l man -p'\" man"
 alias la='exa -laag --group-directories-first'
 
 alias nvimconf='nvim ~/.config/nvim/init.vim'
-
-
+alias udb='sudo updatedb'
 alias wettr='curl https://wttr.in/Prague'
