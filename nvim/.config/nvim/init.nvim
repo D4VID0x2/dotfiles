@@ -78,30 +78,6 @@ call plug#end()
 
 
 
-
-" disable spacebar (don't move forward)
-nnoremap <SPACE> <Nop>
-
-" quickly move through panes
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-
-" resize panes
-nnoremap <silent> <leader>+ :vertical resize +5<CR>
-nnoremap <silent> <leader>- :vertical resize -5<CR>
-nnoremap <silent> <leader>* :resize +5<CR>
-nnoremap <silent> <leader>/ :resize -5<CR>
-
-nnoremap <silent> <leader>fgf :GFiles<CR>
-nnoremap <silent> <leader>ff :Files<CR>
-
-vnoremap <leader>p "_dP
-
-inoremap <C-_>:call NERDComment(0,"toggle")<CR>
-nnoremap <C-_>:call NERDComment(0,"toggle")<CR>
-
 colorscheme gruvbox
 "colorscheme onehalfdark let g:airline_theme='onehalfdark'
 set background=dark
@@ -345,3 +321,70 @@ let g:OmniSharp_want_snippet=1
 
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'xml', 'javascript', 'json', 'asm']
 let g:markdown_minlines = 100
+
+
+
+
+" disable spacebar (don't move forward)
+nnoremap <SPACE> <Nop>
+
+" quickly move through panes
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" resize panes
+nnoremap <silent> <leader>+ :vertical resize +5<CR>
+nnoremap <silent> <leader>- :vertical resize -5<CR>
+nnoremap <silent> <leader>* :resize +5<CR>
+nnoremap <silent> <leader>/ :resize -5<CR>
+
+nnoremap <silent> <leader>fgf :GFiles<CR>
+nnoremap <silent> <leader>ff :Files<CR>
+
+vnoremap <leader>p "_dP
+
+inoremap <C-/>:call NERDComment(0,"toggle")<CR>
+nnoremap <C-/>:call NERDComment(0,"toggle")<CR>
+
+
+
+" MUST HAVE VIM REMAPS
+" https://youtu.be/hSHATqh8svM
+
+" Number 5: Behave Vim
+nnoremap Y y$ 
+
+" Number 4: Keeping it centered
+nnoremap n nzzzv
+nnoremap N Nzzzv
+" nnoremap J mzJ`z
+
+" Number 3: Undo break points
+inoremap , ,<c-g>u
+inoremap . .<c-g>u
+inoremap ! !<c-g>u
+inoremap ? ?<c-g>u
+inoremap _ _<c-g>u
+inoremap - -<c-g>u
+inoremap <space> <space><c-g>u
+
+" Number 2: Jumplist mutations
+nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
+nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
+
+" Number 1: Moving text
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
+inoremap <C-j> :m .+1<CR>==
+inoremap <C-k> :m .-2<CR>==
+nnoremap <leader>j :m .+1<CR>==
+nnoremap <leader>k :m .-2<CR>==
+
+
+vnoremap < <gv
+vnoremap > >gv
+
+" vnoremap <S-Tab> <gv
+" vnoremap <Tab> >gv
