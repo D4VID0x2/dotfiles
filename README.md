@@ -1,2 +1,3 @@
 # dotfiles
-dot configuration files
+
+## using 'stow'
