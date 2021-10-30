@@ -11,7 +11,6 @@ set relativenumber
 set incsearch
 set ignorecase
 set ruler
-set noswapfile
 set splitright
 set splitbelow
 set tabstop=4 softtabstop=4
@@ -40,16 +39,20 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'junegunn/fzf.vim'
     Plug 'airblade/vim-rooter' " addon for fzf, for git projects
 
-    " Plug 'ycm-core/YouCompleteMe' 
+    Plug 'ycm-core/YouCompleteMe'
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-    " Python syntax highlight
+    " Better syntax highlighting
+    " Python:
     Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
     " Plug 'davidhalter/jedi-vim'
+    " C++:
+    Plug 'octol/vim-cpp-enhanced-highlight'
 
-    " Coc Snippets
+    " Snippets
     Plug 'sirver/ultisnips'
     Plug 'honza/vim-snippets'
+    Plug 'ervandew/supertab'
 
     " Show git modifications to file
     Plug 'vim-scripts/vim-gitgutter'
@@ -65,7 +68,7 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 
     " .NET C#
     Plug 'OmniSharp/omnisharp-vim'
-    Plug 'dense-analysis/ale'
+    " Plug 'dense-analysis/ale'
 
 
 
@@ -91,12 +94,24 @@ let g:run_cmd_python = ['python3']
 let g:run_split = 'right'
 
 
-"fun! SetupYCM()
-    "nnoremap <buffer> <silent> <leader>gd :YcmCompleter GoTo<CR>
-    "nnoremap <buffer> <silent> <leader>gr :YcmCompleter GoToReferences<CR>
-    "nnoremap <buffer> <silent> <leader>rr :YcmCompleter RefactorRename<CR>
-    "let g:UltiSnipsExpandTrigger="<c-space>"
-"endfun
+fun! SetupYCM()
+    nnoremap <buffer> <silent> <leader>gd :YcmCompleter GoTo<CR>
+    nnoremap <buffer> <silent> <leader>gr :YcmCompleter GoToReferences<CR>
+    nnoremap <buffer> <silent> <leader>rr :YcmCompleter RefactorRename<CR>
+    nnoremap <buffer> <silent> <leader>fx :YcmCompleter FixIt<CR>
+
+    " make YCM compatible with UltiSnips (using supertab)
+    let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+    let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+    let g:SuperTabDefaultCompletionType = '<C-n>'
+
+    " better key bindings for UltiSnipsExpandTrigger
+    let g:UltiSnipsExpandTrigger = "<tab>"
+    let g:UltiSnipsJumpForwardTrigger = "<tab>"
+    let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+
+    let g:ycm_global_ycm_extra_conf = '/home/david/.config/nvim/autoload/plugged/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py'
+endfun
 
 
 
@@ -121,6 +136,24 @@ fun! SetupCoC()
     nmap <buffer> <leader>gy <Plug>(coc-type-definition)
     nmap <buffer> <leader>gi <Plug>(coc-implementation)
     nmap <buffer> <leader>rn <Plug>(coc-rename)
+
+    " CoC snippet tab completion
+    inoremap <silent><expr> <TAB>
+          \ pumvisible() ? coc#_select_confirm() :
+          \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+          \ <SID>check_back_space() ? "\<TAB>" :
+          \ coc#refresh()
+
+    function! s:check_back_space() abort
+      let col = col('.') - 1
+      return !col || getline('.')[col - 1]  =~# '\s'
+    endfunction
+
+    let g:coc_snippet_next = '<tab>'
+    "let g:UltiSnipsExpandTrigger="<tab>"
+    "let g:UltiSnipsJumpForwardTrigger="<tab>>"
+    "let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+
 endfun
 
 let g:coc_global_extensions = [
@@ -146,36 +179,18 @@ autocmd BufNewFile,BufRead *.ino set filetype=arduino
 
 nnoremap <leader>rr :Run <CR>
 
-" autocmd FileType java,typescript,go :call SetupYCM()
+autocmd FileType java,typescript,go,cpp,h,c,rust :call SetupYCM()
 
-autocmd FileType cpp,h,c,html,css,js,djangohtml,py,sh,lua,php :call SetupCoC()
-" call SetupCoC()
-
+autocmd FileType html,css,js,djangohtml,py,sh,lua,php :call SetupCoC()
 
 
-" CoC snippet tab completion
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? coc#_select_confirm() :
-      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-let g:coc_snippet_next = '<tab>'
-"let g:UltiSnipsExpandTrigger="<tab>"
-"let g:UltiSnipsJumpForwardTrigger="<tab>>"
-"let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 
 
 
 " Shebang line
 function! Hashbang(portable, permission, RemExt)
-let shells = { 
+let shells = {
         \    'awk': "awk",
         \     'sh': "bash",
         \     'hs': "runhaskell",
@@ -184,7 +199,7 @@ let shells = {
         \    'mak': "make",
         \     'js': "node",
         \      'm': "octave",
-        \     'pl': "perl", 
+        \     'pl': "perl",
         \    'php': "php",
         \     'py': "python",
         \      'r': "Rscript",
@@ -199,8 +214,8 @@ if has_key(shells,extension)
 	let fileshell = shells[extension]
 
 	if a:portable
-		let line =  "#! /usr/bin/env " . fileshell 
-	else 
+		let line =  "#! /usr/bin/env " . fileshell
+	else
 		let line = "#! " . system("which " . fileshell)
 	endif
 
@@ -293,6 +308,19 @@ augroup omnisharp_commands
 augroup END
 
 
+
+" Automaticly trim all trailing whitespace on save(write)
+function! <SID>StripTrailingWhitespaces()
+    let l = line(".")
+    let c = col(".")
+    %s/\s\+$//e
+    call cursor(l, c)
+endfun
+
+autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
+
+
+
 let g:OmniSharp_selector_ui = 'fzf'    " Use fzf
 let g:OmniSharp_selector_findusages = 'fzf'
 
@@ -354,7 +382,7 @@ nnoremap <C-/>:call NERDComment(0,"toggle")<CR>
 " https://youtu.be/hSHATqh8svM
 
 " Number 5: Behave Vim
-nnoremap Y y$ 
+nnoremap Y y$
 
 " Number 4: Keeping it centered
 nnoremap n nzzzv
