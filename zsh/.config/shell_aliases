@@ -13,9 +13,9 @@ alias mv='mv -iv'
 alias rm='rm -v'
 
 #alias ccat="highlight --out-format=ansi"
-alias p="sudo pacman"
+alias p="nocorrect sudo pacman"
 alias sc="sudo systemctl"
-alias psg="ps aux | grep"
+alias psg="nocorrect ps aux | grep"
 alias nv='nvim'
 #alias suod='sudo'
 
