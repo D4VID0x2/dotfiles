@@ -303,7 +303,7 @@ augroup omnisharp_commands
   autocmd FileType cs nmap <silent> <buffer> <Leader>ossp <Plug>(omnisharp_stop_server)
 
   "autocmd FileType cs nmap <silent> <buffer> <F5>:vs | term dotnet run
-  autocmd FileType cs nmap <buffer> <Leader>run :vs<CR>:term dotnet run<CR>
+  autocmd FileType cs nmap <buffer> <Leader>run :vs<CR>:w<CR>:term dotnet run<CR>
 
 augroup END
 
