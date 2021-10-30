@@ -124,3 +124,32 @@ fi
 eval $(thefuck --alias)
 
 
+# Command time
+function preexec() {
+  timer=$(($(date +%s%0N)/1000000))
+}
+
+function precmd() {
+  if [ $timer ]; then
+    now=$(($(date +%s%0N)/1000000))
+    elapsed=$(($now-$timer))
+
+    ms=$(($elapsed % 1000))
+    sec=$(($elapsed/1000 % 60))
+    min=$(($elapsed/60000 % 60))
+    hour=$(($elapsed/3600000))
+
+    if [ "$elapsed" -le 1000 ]; then
+        export RPROMPT="%F{cyan} $(printf "%d ms" $ms) %{$reset_color%}"
+    elif [ "$elapsed" -gt 1000 ] && [ "$elapsed" -le 60000 ]; then
+        export RPROMPT="%F{cyan} $(printf "%d.%03d s" $sec $ms) %{$reset_color%}"
+    elif [ "$elapsed" -gt 60000 ] && [ "$elapsed" -le 3600000 ]; then
+        export RPROMPT="%F{yellow} $(printf "%d min. %d s" $min $sec) %{$reset_color%}"
+    else
+        export RPROMPT="%F{red} $(printf "%d hours %d min. %d s" $hour $min $sec) %{$reset_color%}"
+    fi
+
+    unset timer
+  fi
+}
+
