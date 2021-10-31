@@ -16,4 +16,6 @@ fi
 
 export PATH=$PATH:~/.cargo/bin
 
+. "$HOME/.cargo/env"
+
 tmux
