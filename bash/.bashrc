@@ -14,7 +14,8 @@ if [ -f ~/.shell_aliases ]; then
     source ~/.shell_aliases
 fi
 
-export PATH=$PATH:~/.cargo/bin
+export PATH=$PATH:$HOME/.cargo/bin
+export PATH=$PATH:$HOME/.pub-cache/bin
 
 . "$HOME/.cargo/env"
 

@@ -47,12 +47,12 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'junegunn/fzf.vim'
     Plug 'airblade/vim-rooter' " addon for fzf, for git projects
 
-    "Plug 'ycm-core/YouCompleteMe'
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    " Plug 'ycm-core/YouCompleteMe'
+    " Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
     " Better syntax highlighting
     " Python:
-""    Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+    Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
     " Plug 'davidhalter/jedi-vim'
 
     " C++:
@@ -363,16 +363,16 @@ endfun
 " - Restart
 
 
-function SetupRust()
+function SetupLSP()
     " Set completeopt to have a better completion experience
     " :help completeopt
     " menuone: popup even when there's only one match
     " noinsert: Do not insert text until a selection is made
     " noselect: Do not select, force user to select one from the menu
-    set completeopt=menuone,noinsert,noselect
+    set completeopt=menuone,noinsert,noselect,preview
 
     " Avoid showing extra messages when using completion
-    set shortmess+=c
+    "set shortmess+=c
 
     " Configure LSP through rust-tools.nvim plugin.
     " rust-tools will configure and enable certain LSP features for us.
@@ -382,7 +382,7 @@ function SetupRust()
     -- nvim_lsp object
     local nvim_lsp = require'lspconfig'
 
-    local opts = {
+    nvim_lsp.rust_analyzer.setup({
         tools = {
             autoSetHints = true,
             hover_with_actions = true,
@@ -413,18 +413,33 @@ function SetupRust()
                 }
             }
         },
-    }
+    })
 
-    require('rust-tools').setup(opts)
+    -- require('rust-tools').setup(opts)
+
+    nvim_lsp.pylsp.setup({
+        tools = {
+            autoSetHints = true,
+            hover_with_actions = true,
+            runnables = {
+                use_telescope = true
+            },
+            inlay_hints = {
+                show_parameter_hints = false,
+                parameter_hints_prefix = "",
+                other_hints_prefix = "",
+            },
+        },
+    })
 EOF
+    autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
     " Code navigation shortcuts
     " as found in :help lsp
-    nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
-    nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
-    nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+    nnoremap <silent> <leader>rn <cmd>lua vim.lsp.buf.rename()<CR>
+    nnoremap <silent> gi    <cmd>lua vim.lsp.buf.implementation()<CR>
     nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-    nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+    " nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
     nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
     nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
     nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
@@ -484,9 +499,11 @@ EOF
     " Goto previous/next diagnostic warning/error
     nnoremap <silent> g[ <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
     nnoremap <silent> g] <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+
+    " colorscheme nord
 endfunction
 
-:call SetupRust()
+:call SetupLSP()
 
 
 
@@ -581,7 +598,7 @@ autocmd FileType java,typescript,go,cpp,h,c :call SetupYCM()
 
 autocmd FileType html,css,js,djangohtml,py,sh,lua,php :call SetupCoC()
 
-autocmd FileType rust :call SetupRust()
+" autocmd FileType rust :call SetupRust()
 
 
 
