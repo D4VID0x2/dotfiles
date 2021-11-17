@@ -23,7 +23,7 @@ set undodir=~/.vim/undodir
 set undofile
 set nohlsearch
 set cursorline
-
+set scrolloff=4
 
 call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'scrooloose/nerdcommenter'
@@ -39,7 +39,7 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'junegunn/fzf.vim'
     Plug 'airblade/vim-rooter' " addon for fzf, for git projects
 
-    Plug 'ycm-core/YouCompleteMe'
+    " Plug 'ycm-core/YouCompleteMe'
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
     " Better syntax highlighting
