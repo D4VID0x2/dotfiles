@@ -22,9 +22,8 @@ set undodir=~/.vim/undodir
 set undofile
 set nohlsearch
 set cursorline
+set scrolloff=4
 set inccommand=nosplit " highlight substitude
-
-
 
 
 
