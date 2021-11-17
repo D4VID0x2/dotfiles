@@ -1,6 +1,5 @@
-
 let mapleader=" "
-set timeout timeoutlen=2000
+set timeout timeoutlen=3000
 
 set mouse=
 syntax on
@@ -24,13 +23,21 @@ set undofile
 set nohlsearch
 set cursorline
 set scrolloff=4
+set inccommand=nosplit " highlight substitude
+
+
+
+" PLUGINS:
 
 call plug#begin('~/.config/nvim/autoload/plugged')
+
     Plug 'scrooloose/nerdcommenter'
     Plug 'preservim/nerdtree'
 
+    Plug 'zhimsel/vim-stay'
+
     Plug 'morhetz/gruvbox' " themes
-    Plug 'sonph/onehalf'
+""    Plug 'sonph/onehalf'
 
     " Plug 'ThePrimeagen/vim-be-good', {'do': './install.sh'} " vim training game
 
@@ -44,8 +51,9 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 
     " Better syntax highlighting
     " Python:
-    Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+""    Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
     " Plug 'davidhalter/jedi-vim'
+
     " C++:
     Plug 'octol/vim-cpp-enhanced-highlight'
 
@@ -55,7 +63,7 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'ervandew/supertab'
 
     " Show git modifications to file
-    Plug 'vim-scripts/vim-gitgutter'
+""Plug 'vim-scripts/vim-gitgutter'
 
     Plug 'jremmen/vim-ripgrep' " Rg uses word under cursor
 
@@ -71,21 +79,64 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     " Plug 'dense-analysis/ale'
 
 
-
     " Markdown
     " Plug 'plasticboy/vim-markdown'
     " Plug 'kamikat/vim-markdown'
     Plug 'tpope/vim-markdown'
 
+
+
+
+
+
+    " LSP:
+
+    " Collection of common configurations for the Nvim LSP client
+    Plug 'neovim/nvim-lspconfig'
+
+    " Autocompletion framework
+    Plug 'hrsh7th/nvim-cmp'
+    " cmp LSP completion
+    Plug 'hrsh7th/cmp-nvim-lsp'
+    " cmp Snippet completion
+    Plug 'hrsh7th/cmp-vsnip'
+    " cmp Path completion
+    Plug 'hrsh7th/cmp-path'
+    Plug 'hrsh7th/cmp-buffer'
+    " See hrsh7th other plugins for more great completion sources!
+
+    " Adds extra functionality over rust analyzer
+    Plug 'simrat39/rust-tools.nvim'
+
+    " Snippet engine
+    Plug 'hrsh7th/vim-vsnip'
+
+    " Optional
+    Plug 'nvim-lua/popup.nvim'
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'nvim-telescope/telescope.nvim'
+
+    " Some color scheme other then default
+    Plug 'arcticicestudio/nord-vim'
+
 call plug#end()
 
 
+
+
+
+
+
+" COLORSCHEME:
 
 colorscheme gruvbox
 "colorscheme onehalfdark let g:airline_theme='onehalfdark'
 set background=dark
 
-:set inccommand=nosplit " highlight substitude
+
+
+
+
 
 let g:rooter_manual_only = 1
 
@@ -93,7 +144,20 @@ let g:rooter_manual_only = 1
 let g:run_cmd_python = ['python3']
 let g:run_split = 'right'
 
+" HTTP
+let g:vim_http_split_vertically = 1
 
+
+" Markdown
+
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'xml', 'javascript', 'json', 'asm']
+let g:markdown_minlines = 100
+
+
+
+
+
+" YouCompleteMe:
 fun! SetupYCM()
     nnoremap <buffer> <silent> <leader>gd :YcmCompleter GoTo<CR>
     nnoremap <buffer> <silent> <leader>gr :YcmCompleter GoToReferences<CR>
@@ -116,8 +180,12 @@ endfun
 
 
 
-" CoC
 
+
+
+
+
+" CoC:
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
@@ -154,43 +222,284 @@ fun! SetupCoC()
     "let g:UltiSnipsJumpForwardTrigger="<tab>>"
     "let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
+    let g:coc_global_extensions = [
+        \ 'coc-snippets',
+        \ 'coc-pairs',
+        \ 'coc-prettier',
+        \ 'coc-json',
+        \ 'coc-pyright',
+        \ 'coc-html',
+        \ 'coc-css',
+        \ 'coc-xml',
+        \ 'coc-yaml',
+        \ 'coc-lua',
+        \ ]
 endfun
 
-let g:coc_global_extensions = [
-    \ 'coc-snippets',
-    \ 'coc-pairs',
-    \ 'coc-prettier',
-    \ 'coc-json',
-    \ 'coc-pyright',
-    \ 'coc-html',
-    \ 'coc-css',
-    \ 'coc-xml',
-    \ 'coc-yaml',
-    \ 'coc-lua',
-    \ ]
-
-autocmd BufNewFile,BufRead *.pde set syntax=java
-autocmd BufNewFile,BufRead *.pde set filetype=java
-autocmd BufNewFile,BufRead *.ino set syntax=arduino
-autocmd BufNewFile,BufRead *.ino set filetype=arduino
-
-" run python script
-" autocmd BufNewFile,BufRead *.py nnoremap <C-S-R> :vs <CR> :term python % <CR>
-
-nnoremap <leader>rr :Run <CR>
-
-autocmd FileType java,typescript,go,cpp,h,c,rust :call SetupYCM()
-
-autocmd FileType html,css,js,djangohtml,py,sh,lua,php :call SetupCoC()
 
 
 
 
 
 
-" Shebang line
+
+
+
+
+" DOTNET:
+fun! SetupDotnet()
+    " .NET C#
+    " Don't autoselect first omnicomplete option, show options even if there is only
+    " one (so the preview documentation is accessible). Remove 'preview', 'popup'
+    " and 'popuphidden' if you don't want to see any documentation whatsoever.
+    " Note that neovim does not support `popuphidden` or `popup` yet:
+    " https://github.com/neovim/neovim/issues/10996
+    if has('patch-8.1.1880')
+      set completeopt=longest,menuone,popuphidden
+      " Highlight the completion documentation popup background/foreground the same as
+      " the completion menu itself, for better readability with highlighted
+      " documentation.
+      set completepopup=highlight:Pmenu,border:off
+    else
+      set completeopt=longest,menuone,preview
+      " Set desired preview window height for viewing documentation.
+      set previewheight=5
+    endif
+
+    " Tell ALE to use OmniSharp for linting C# files, and no other linters.
+    "let g:ale_linters = { 'cs': ['OmniSharp'] }
+
+    augroup omnisharp_commands
+      autocmd!
+
+      " Show type information automatically when the cursor stops moving.
+      " Note that the type is echoed to the Vim command line, and will overwrite
+      " any other messages in this space including e.g. ALE linting messages.
+      autocmd CursorHold *.cs OmniSharpTypeLookup
+
+      " The following commands are contextual, based on the cursor position.
+      autocmd FileType cs nmap <silent> <buffer> <Leader>gd <Plug>(omnisharp_go_to_definition)
+      autocmd FileType cs nmap <silent> <buffer> <Leader>gu <Plug>(omnisharp_find_usages)
+      autocmd FileType cs nmap <silent> <buffer> <Leader>gi <Plug>(omnisharp_find_implementations)
+      autocmd FileType cs nmap <silent> <buffer> <Leader>ospd <Plug>(omnisharp_preview_definition)
+      autocmd FileType cs nmap <silent> <buffer> <Leader>ospi <Plug>(omnisharp_preview_implementations)
+      autocmd FileType cs nmap <silent> <buffer> <Leader>ost <Plug>(omnisharp_type_lookup)
+      autocmd FileType cs nmap <silent> <buffer> <Leader>osd <Plug>(omnisharp_documentation)
+      autocmd FileType cs nmap <silent> <buffer> <Leader>osfs <Plug>(omnisharp_find_symbol)
+      autocmd FileType cs nmap <silent> <buffer> <Leader>osfx <Plug>(omnisharp_fix_usings)
+      autocmd FileType cs nmap <silent> <buffer> <C-\> <Plug>(omnisharp_signature_help)
+      autocmd FileType cs imap <silent> <buffer> <C-\> <Plug>(omnisharp_signature_help)
+
+      " Navigate up and down by method/property/field
+      autocmd FileType cs nmap <silent> <buffer> [[ <Plug>(omnisharp_navigate_up)
+      autocmd FileType cs nmap <silent> <buffer> ]] <Plug>(omnisharp_navigate_down)
+      " Find all code errors/warnings for the current solution and populate the quickfix window
+      autocmd FileType cs nmap <silent> <buffer> <Leader>oscc <Plug>(omnisharp_global_code_check)
+      " Contextual code actions (uses fzf, vim-clap, CtrlP or unite.vim selector when available)
+      autocmd FileType cs nmap <silent> <buffer> <Leader>osca <Plug>(omnisharp_code_actions)
+      autocmd FileType cs xmap <silent> <buffer> <Leader>osca <Plug>(omnisharp_code_actions)
+      " Repeat the last code action performed (does not use a selector)
+      autocmd FileType cs nmap <silent> <buffer> <Leader>os. <Plug>(omnisharp_code_action_repeat)
+      autocmd FileType cs xmap <silent> <buffer> <Leader>os. <Plug>(omnisharp_code_action_repeat)
+
+      autocmd FileType cs nmap <silent> <buffer> <Leader>os= <Plug>(omnisharp_code_format)
+
+      autocmd FileType cs nmap <silent> <buffer> <Leader>rn <Plug>(omnisharp_rename)
+
+      autocmd FileType cs nmap <silent> <buffer> <Leader>osre <Plug>(omnisharp_restart_server)
+      autocmd FileType cs nmap <silent> <buffer> <Leader>osst <Plug>(omnisharp_start_server)
+      autocmd FileType cs nmap <silent> <buffer> <Leader>ossp <Plug>(omnisharp_stop_server)
+
+      "autocmd FileType cs nmap <silent> <buffer> <F5>:vs | term dotnet run
+      autocmd FileType cs nmap <buffer> <Leader>run :vs<CR>:w<CR>:term dotnet run<CR>
+
+    augroup END
+
+    let g:OmniSharp_selector_ui = 'fzf'    " Use fzf
+    let g:OmniSharp_selector_findusages = 'fzf'
+
+    let g:OmniSharp_highlighting = 3 " Highlight in insert mode
+
+    let g:OmniSharp_highlight_groups = {
+    \ 'Comment': 'NonText',
+    \ 'XmlDocCommentName': 'Identifier',
+    \ 'XmlDocCommentText': 'NonText'
+    \}
+
+    let g:OmniSharp_popup_options = {
+    \ 'winblend': 30,
+    \ 'winhl': 'Normal:Normal'
+    \}
+
+    " Enable snippet completion, using the ultisnips plugin
+    let g:OmniSharp_want_snippet=1
+endfun
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+" RUST:
+" This is an example on how rust-analyzer can be configure using rust-tools
+" https://sharksforarms.dev/posts/neovim-rust/
+
+" Prerequisites:
+" - neovim >= 0.5
+" - rust-analyzer: https://rust-analyzer.github.io/manual.html#rust-analyzer-language-server-binary
+
+" Steps:
+" - :PlugInstall
+" - Restart
+
+
+function SetupRust()
+    " Set completeopt to have a better completion experience
+    " :help completeopt
+    " menuone: popup even when there's only one match
+    " noinsert: Do not insert text until a selection is made
+    " noselect: Do not select, force user to select one from the menu
+    set completeopt=menuone,noinsert,noselect
+
+    " Avoid showing extra messages when using completion
+    set shortmess+=c
+
+    " Configure LSP through rust-tools.nvim plugin.
+    " rust-tools will configure and enable certain LSP features for us.
+    " See https://github.com/simrat39/rust-tools.nvim#configuration
+    lua <<EOF
+
+    -- nvim_lsp object
+    local nvim_lsp = require'lspconfig'
+
+    local opts = {
+        tools = {
+            autoSetHints = true,
+            hover_with_actions = true,
+            runnables = {
+                use_telescope = true
+            },
+            inlay_hints = {
+                show_parameter_hints = false,
+                parameter_hints_prefix = "",
+                other_hints_prefix = "",
+            },
+        },
+
+        -- all the opts to send to nvim-lspconfig
+        -- these override the defaults set by rust-tools.nvim
+        -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
+        server = {
+            -- on_attach is a callback called when the language server attachs to the buffer
+            -- on_attach = on_attach,
+            settings = {
+                -- to enable rust-analyzer settings visit:
+                -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
+                ["rust-analyzer"] = {
+                    -- enable clippy on save
+                    checkOnSave = {
+                        command = "clippy"
+                    },
+                }
+            }
+        },
+    }
+
+    require('rust-tools').setup(opts)
+EOF
+
+    " Code navigation shortcuts
+    " as found in :help lsp
+    nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+    nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+    nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+    nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+    nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+    nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+    nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+    nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+    nnoremap <silent> gd    <cmd>lua vim.lsp.buf.definition()<CR>
+
+    " Quick-fix
+    nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<CR>
+
+    " Setup Completion
+    " See https://github.com/hrsh7th/nvim-cmp#basic-configuration
+    lua <<EOF
+    local cmp = require'cmp'
+    cmp.setup({
+      snippet = {
+        expand = function(args)
+            vim.fn["vsnip#anonymous"](args.body)
+        end,
+      },
+      mapping = {
+        ['<C-p>'] = cmp.mapping.select_prev_item(),
+        ['<C-n>'] = cmp.mapping.select_next_item(),
+        -- Add tab support
+        ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+        ['<Tab>'] = cmp.mapping.select_next_item(),
+        ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-f>'] = cmp.mapping.scroll_docs(4),
+        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<C-e>'] = cmp.mapping.close(),
+        ['<CR>'] = cmp.mapping.confirm({
+          behavior = cmp.ConfirmBehavior.Insert,
+          select = true,
+        })
+      },
+
+      -- Installed sources
+      sources = {
+        { name = 'nvim_lsp' },
+        { name = 'vsnip' },
+        { name = 'path' },
+        { name = 'buffer' },
+      },
+    })
+EOF
+
+    " have a fixed column for the diagnostics to appear in
+    " this removes the jitter when warnings/errors flow in
+    set signcolumn=yes
+
+    " Set updatetime for CursorHold
+    " 300ms of no cursor movement to trigger CursorHold
+    set updatetime=300
+    " Show diagnostic popup on cursor hover
+
+    " TODO: bug, focuses popup window
+    "autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
+
+    " Goto previous/next diagnostic warning/error
+    nnoremap <silent> g[ <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+    nnoremap <silent> g] <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+endfunction
+
+:call SetupRust()
+
+
+
+
+
+
+
+
+
+
+
+" Shebang line:
 function! Hashbang(portable, permission, RemExt)
-let shells = {
+    let shells = {
         \    'awk': "awk",
         \     'sh': "bash",
         \     'hs': "runhaskell",
@@ -209,103 +518,29 @@ let shells = {
         \     'tk': "wish"
         \    }
 
-let extension = expand("%:e")
-if has_key(shells,extension)
-	let fileshell = shells[extension]
+    let extension = expand("%:e")
+    if has_key(shells,extension)
+        let fileshell = shells[extension]
 
-	if a:portable
-		let line =  "#! /usr/bin/env " . fileshell
-	else
-		let line = "#! " . system("which " . fileshell)
-	endif
+        if a:portable
+            let line =  "#! /usr/bin/env " . fileshell
+        else
+            let line = "#! " . system("which " . fileshell)
+        endif
 
-	0put = line
+        0put = line
 
-	if a:permission
-		:autocmd BufWritePost * :autocmd VimLeave * :!chmod u+x %
-	endif
-	if a:RemExt
-		:autocmd BufWritePost * :autocmd VimLeave * :!mv % "%:p:r"
-	endif
-endif
+        if a:permission
+            :autocmd BufWritePost * :autocmd VimLeave * :!chmod u+x %
+        endif
+        if a:RemExt
+            :autocmd BufWritePost * :autocmd VimLeave * :!mv % "%:p:r"
+        endif
+    endif
 endfunction
 
-:autocmd BufNewFile *.* :call Hashbang(1,1,0)
 
 
-" HTTP
-let g:vim_http_split_vertically = 1
-
-
-
-
-
-" .NET C#
-" Don't autoselect first omnicomplete option, show options even if there is only
-" one (so the preview documentation is accessible). Remove 'preview', 'popup'
-" and 'popuphidden' if you don't want to see any documentation whatsoever.
-" Note that neovim does not support `popuphidden` or `popup` yet:
-" https://github.com/neovim/neovim/issues/10996
-if has('patch-8.1.1880')
-  set completeopt=longest,menuone,popuphidden
-  " Highlight the completion documentation popup background/foreground the same as
-  " the completion menu itself, for better readability with highlighted
-  " documentation.
-  set completepopup=highlight:Pmenu,border:off
-else
-  set completeopt=longest,menuone,preview
-  " Set desired preview window height for viewing documentation.
-  set previewheight=5
-endif
-
-" Tell ALE to use OmniSharp for linting C# files, and no other linters.
-"let g:ale_linters = { 'cs': ['OmniSharp'] }
-
-augroup omnisharp_commands
-  autocmd!
-
-  " Show type information automatically when the cursor stops moving.
-  " Note that the type is echoed to the Vim command line, and will overwrite
-  " any other messages in this space including e.g. ALE linting messages.
-  autocmd CursorHold *.cs OmniSharpTypeLookup
-
-  " The following commands are contextual, based on the cursor position.
-  autocmd FileType cs nmap <silent> <buffer> <Leader>gd <Plug>(omnisharp_go_to_definition)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>gu <Plug>(omnisharp_find_usages)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>gi <Plug>(omnisharp_find_implementations)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>ospd <Plug>(omnisharp_preview_definition)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>ospi <Plug>(omnisharp_preview_implementations)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>ost <Plug>(omnisharp_type_lookup)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>osd <Plug>(omnisharp_documentation)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>osfs <Plug>(omnisharp_find_symbol)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>osfx <Plug>(omnisharp_fix_usings)
-  autocmd FileType cs nmap <silent> <buffer> <C-\> <Plug>(omnisharp_signature_help)
-  autocmd FileType cs imap <silent> <buffer> <C-\> <Plug>(omnisharp_signature_help)
-
-  " Navigate up and down by method/property/field
-  autocmd FileType cs nmap <silent> <buffer> [[ <Plug>(omnisharp_navigate_up)
-  autocmd FileType cs nmap <silent> <buffer> ]] <Plug>(omnisharp_navigate_down)
-  " Find all code errors/warnings for the current solution and populate the quickfix window
-  autocmd FileType cs nmap <silent> <buffer> <Leader>oscc <Plug>(omnisharp_global_code_check)
-  " Contextual code actions (uses fzf, vim-clap, CtrlP or unite.vim selector when available)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>osca <Plug>(omnisharp_code_actions)
-  autocmd FileType cs xmap <silent> <buffer> <Leader>osca <Plug>(omnisharp_code_actions)
-  " Repeat the last code action performed (does not use a selector)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>os. <Plug>(omnisharp_code_action_repeat)
-  autocmd FileType cs xmap <silent> <buffer> <Leader>os. <Plug>(omnisharp_code_action_repeat)
-
-  autocmd FileType cs nmap <silent> <buffer> <Leader>os= <Plug>(omnisharp_code_format)
-
-  autocmd FileType cs nmap <silent> <buffer> <Leader>rn <Plug>(omnisharp_rename)
-
-  autocmd FileType cs nmap <silent> <buffer> <Leader>osre <Plug>(omnisharp_restart_server)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>osst <Plug>(omnisharp_start_server)
-  autocmd FileType cs nmap <silent> <buffer> <Leader>ossp <Plug>(omnisharp_stop_server)
-
-  "autocmd FileType cs nmap <silent> <buffer> <F5>:vs | term dotnet run
-  autocmd FileType cs nmap <buffer> <Leader>run :vs<CR>:w<CR>:term dotnet run<CR>
-
-augroup END
 
 
 
@@ -321,36 +556,37 @@ autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
 
 
-let g:OmniSharp_selector_ui = 'fzf'    " Use fzf
-let g:OmniSharp_selector_findusages = 'fzf'
-
-let g:OmniSharp_highlighting = 3 " Highlight in insert mode
-
-let g:OmniSharp_highlight_groups = {
-\ 'Comment': 'NonText',
-\ 'XmlDocCommentName': 'Identifier',
-\ 'XmlDocCommentText': 'NonText'
-\}
-
-let g:OmniSharp_popup_options = {
-\ 'winblend': 30,
-\ 'winhl': 'Normal:Normal'
-\}
-
-" Enable snippet completion, using the ultisnips plugin
-let g:OmniSharp_want_snippet=1
 
 
 
 
 
 
-" Markdown
+" AUTOCMD:
 
-let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'xml', 'javascript', 'json', 'asm']
-let g:markdown_minlines = 100
+autocmd BufNewFile,BufRead *.pde set syntax=java
+autocmd BufNewFile,BufRead *.pde set filetype=java
+autocmd BufNewFile,BufRead *.ino set syntax=arduino
+autocmd BufNewFile,BufRead *.ino set filetype=arduino
+
+autocmd BufNewFile *.* :call Hashbang(1,1,0)
+
+" run python script
+" autocmd BufNewFile,BufRead *.py nnoremap <C-S-R> :vs <CR> :term python % <CR>
+
+nnoremap <leader>rr :Run <CR>
+
+autocmd FileType java,typescript,go,cpp,h,c :call SetupYCM()
+
+autocmd FileType html,css,js,djangohtml,py,sh,lua,php :call SetupCoC()
+
+autocmd FileType rust :call SetupRust()
 
 
+
+
+
+" REMAPPING:
 
 
 " disable spacebar (don't move forward)
@@ -378,7 +614,16 @@ nnoremap <C-/>:call NERDComment(0,"toggle")<CR>
 
 
 
-" MUST HAVE VIM REMAPS
+
+
+
+
+
+
+
+
+
+" MUST HAVE VIM REMAPS:
 " https://youtu.be/hSHATqh8svM
 
 " Number 5: Behave Vim
@@ -416,3 +661,4 @@ vnoremap > >gv
 
 " vnoremap <S-Tab> <gv
 " vnoremap <Tab> >gv
+
