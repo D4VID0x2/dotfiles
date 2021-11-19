@@ -11,6 +11,7 @@ alias ..='cd ..'
 alias cp='cp -iv'
 alias mv='mv -iv'
 alias rm='rm -v'
+alias free='free -m'
 
 #alias ccat="highlight --out-format=ansi"
 alias p="nocorrect sudo pacman"
