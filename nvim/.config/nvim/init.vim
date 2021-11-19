@@ -89,35 +89,35 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 
 
 
-    " LSP:
+    " " LSP:
 
-    " Collection of common configurations for the Nvim LSP client
-    Plug 'neovim/nvim-lspconfig'
+    " " Collection of common configurations for the Nvim LSP client
+    " Plug 'neovim/nvim-lspconfig'
 
-    " Autocompletion framework
-    Plug 'hrsh7th/nvim-cmp'
-    " cmp LSP completion
-    Plug 'hrsh7th/cmp-nvim-lsp'
-    " cmp Snippet completion
-    Plug 'hrsh7th/cmp-vsnip'
-    " cmp Path completion
-    Plug 'hrsh7th/cmp-path'
-    Plug 'hrsh7th/cmp-buffer'
-    " See hrsh7th other plugins for more great completion sources!
+    " " Autocompletion framework
+    " Plug 'hrsh7th/nvim-cmp'
+    " " cmp LSP completion
+    " Plug 'hrsh7th/cmp-nvim-lsp'
+    " " cmp Snippet completion
+    " Plug 'hrsh7th/cmp-vsnip'
+    " " cmp Path completion
+    " Plug 'hrsh7th/cmp-path'
+    " Plug 'hrsh7th/cmp-buffer'
+    " " See hrsh7th other plugins for more great completion sources!
 
-    " Adds extra functionality over rust analyzer
-    Plug 'simrat39/rust-tools.nvim'
+    " " Adds extra functionality over rust analyzer
+    " Plug 'simrat39/rust-tools.nvim'
 
-    " Snippet engine
-    Plug 'hrsh7th/vim-vsnip'
+    " " Snippet engine
+    " Plug 'hrsh7th/vim-vsnip'
 
-    " Optional
-    Plug 'nvim-lua/popup.nvim'
-    Plug 'nvim-lua/plenary.nvim'
-    Plug 'nvim-telescope/telescope.nvim'
+    " " Optional
+    " Plug 'nvim-lua/popup.nvim'
+    " Plug 'nvim-lua/plenary.nvim'
+    " Plug 'nvim-telescope/telescope.nvim'
 
-    " Some color scheme other then default
-    Plug 'arcticicestudio/nord-vim'
+    " " Some color scheme other then default
+    " Plug 'arcticicestudio/nord-vim'
 
 call plug#end()
 
@@ -150,7 +150,7 @@ let g:vim_http_split_vertically = 1
 
 " Markdown
 
-let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'xml', 'javascript', 'json', 'asm']
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'xml', 'javascript', 'json', 'asm', 'cs']
 let g:markdown_minlines = 100
 
 
@@ -269,8 +269,8 @@ fun! SetupDotnet()
     " Tell ALE to use OmniSharp for linting C# files, and no other linters.
     "let g:ale_linters = { 'cs': ['OmniSharp'] }
 
-    augroup omnisharp_commands
-      autocmd!
+    "augroup omnisharp_commands
+      "autocmd!
 
       " Show type information automatically when the cursor stops moving.
       " Note that the type is echoed to the Vim command line, and will overwrite
@@ -278,42 +278,42 @@ fun! SetupDotnet()
       autocmd CursorHold *.cs OmniSharpTypeLookup
 
       " The following commands are contextual, based on the cursor position.
-      autocmd FileType cs nmap <silent> <buffer> <Leader>gd <Plug>(omnisharp_go_to_definition)
-      autocmd FileType cs nmap <silent> <buffer> <Leader>gu <Plug>(omnisharp_find_usages)
-      autocmd FileType cs nmap <silent> <buffer> <Leader>gi <Plug>(omnisharp_find_implementations)
-      autocmd FileType cs nmap <silent> <buffer> <Leader>ospd <Plug>(omnisharp_preview_definition)
-      autocmd FileType cs nmap <silent> <buffer> <Leader>ospi <Plug>(omnisharp_preview_implementations)
-      autocmd FileType cs nmap <silent> <buffer> <Leader>ost <Plug>(omnisharp_type_lookup)
-      autocmd FileType cs nmap <silent> <buffer> <Leader>osd <Plug>(omnisharp_documentation)
-      autocmd FileType cs nmap <silent> <buffer> <Leader>osfs <Plug>(omnisharp_find_symbol)
-      autocmd FileType cs nmap <silent> <buffer> <Leader>osfx <Plug>(omnisharp_fix_usings)
-      autocmd FileType cs nmap <silent> <buffer> <C-\> <Plug>(omnisharp_signature_help)
-      autocmd FileType cs imap <silent> <buffer> <C-\> <Plug>(omnisharp_signature_help)
+      nmap <silent> <buffer> <Leader>gd <Plug>(omnisharp_go_to_definition)
+      nmap <silent> <buffer> <Leader>gu <Plug>(omnisharp_find_usages)
+      nmap <silent> <buffer> <Leader>gi <Plug>(omnisharp_find_implementations)
+      nmap <silent> <buffer> <Leader>ospd <Plug>(omnisharp_preview_definition)
+      nmap <silent> <buffer> <Leader>ospi <Plug>(omnisharp_preview_implementations)
+      nmap <silent> <buffer> <Leader>ost <Plug>(omnisharp_type_lookup)
+      nmap <silent> <buffer> <Leader>osd <Plug>(omnisharp_documentation)
+      nmap <silent> <buffer> <Leader>osfs <Plug>(omnisharp_find_symbol)
+      nmap <silent> <buffer> <Leader>osfx <Plug>(omnisharp_fix_usings)
+      nmap <silent> <buffer> <C-\> <Plug>(omnisharp_signature_help)
+      imap <silent> <buffer> <C-\> <Plug>(omnisharp_signature_help)
 
       " Navigate up and down by method/property/field
-      autocmd FileType cs nmap <silent> <buffer> [[ <Plug>(omnisharp_navigate_up)
-      autocmd FileType cs nmap <silent> <buffer> ]] <Plug>(omnisharp_navigate_down)
+      nmap <silent> <buffer> [[ <Plug>(omnisharp_navigate_up)
+      nmap <silent> <buffer> ]] <Plug>(omnisharp_navigate_down)
       " Find all code errors/warnings for the current solution and populate the quickfix window
-      autocmd FileType cs nmap <silent> <buffer> <Leader>oscc <Plug>(omnisharp_global_code_check)
+      nmap <silent> <buffer> <Leader>oscc <Plug>(omnisharp_global_code_check)
       " Contextual code actions (uses fzf, vim-clap, CtrlP or unite.vim selector when available)
-      autocmd FileType cs nmap <silent> <buffer> <Leader>osca <Plug>(omnisharp_code_actions)
-      autocmd FileType cs xmap <silent> <buffer> <Leader>osca <Plug>(omnisharp_code_actions)
+      nmap <silent> <buffer> <Leader>osca <Plug>(omnisharp_code_actions)
+      xmap <silent> <buffer> <Leader>osca <Plug>(omnisharp_code_actions)
       " Repeat the last code action performed (does not use a selector)
-      autocmd FileType cs nmap <silent> <buffer> <Leader>os. <Plug>(omnisharp_code_action_repeat)
-      autocmd FileType cs xmap <silent> <buffer> <Leader>os. <Plug>(omnisharp_code_action_repeat)
+      nmap <silent> <buffer> <Leader>os. <Plug>(omnisharp_code_action_repeat)
+      xmap <silent> <buffer> <Leader>os. <Plug>(omnisharp_code_action_repeat)
 
-      autocmd FileType cs nmap <silent> <buffer> <Leader>os= <Plug>(omnisharp_code_format)
+      nmap <silent> <buffer> <Leader>os= <Plug>(omnisharp_code_format)
 
-      autocmd FileType cs nmap <silent> <buffer> <Leader>rn <Plug>(omnisharp_rename)
+      nmap <silent> <buffer> <Leader>rn <Plug>(omnisharp_rename)
 
-      autocmd FileType cs nmap <silent> <buffer> <Leader>osre <Plug>(omnisharp_restart_server)
-      autocmd FileType cs nmap <silent> <buffer> <Leader>osst <Plug>(omnisharp_start_server)
-      autocmd FileType cs nmap <silent> <buffer> <Leader>ossp <Plug>(omnisharp_stop_server)
+      nmap <silent> <buffer> <Leader>osre <Plug>(omnisharp_restart_server)
+      nmap <silent> <buffer> <Leader>osst <Plug>(omnisharp_start_server)
+      nmap <silent> <buffer> <Leader>ossp <Plug>(omnisharp_stop_server)
 
-      "autocmd FileType cs nmap <silent> <buffer> <F5>:vs | term dotnet run
-      autocmd FileType cs nmap <buffer> <Leader>run :vs<CR>:w<CR>:term dotnet run<CR>
+      "nmap <silent> <buffer> <F5>:vs | term dotnet run
+      nmap <buffer> <Leader>run :vs<CR>:w<CR>:term dotnet run<CR>
 
-    augroup END
+    "augroup END
 
     let g:OmniSharp_selector_ui = 'fzf'    " Use fzf
     let g:OmniSharp_selector_findusages = 'fzf'
@@ -360,9 +360,9 @@ endfun
 " Steps:
 " - :PlugInstall
 " - Restart
+"
 
-
-function SetupLSP()
+function! SetupLSP()
     " Set completeopt to have a better completion experience
     " :help completeopt
     " menuone: popup even when there's only one match
@@ -502,7 +502,6 @@ EOF
     " colorscheme nord
 endfunction
 
-:call SetupLSP()
 
 
 
@@ -597,7 +596,11 @@ autocmd FileType java,typescript,go,cpp,h,c :call SetupYCM()
 
 autocmd FileType html,css,js,djangohtml,py,sh,lua,php :call SetupCoC()
 
+autocmd FileType cs :call SetupDotnet()
+
 " autocmd FileType rust :call SetupRust()
+
+" :call SetupLSP()
 
 
 
