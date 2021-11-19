@@ -51,7 +51,7 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 
     " Better syntax highlighting
     " Python:
-    Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+    " Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
     " Plug 'davidhalter/jedi-vim'
 
     " C++:
