@@ -594,7 +594,7 @@ autocmd BufNewFile *.* :call Hashbang(1,1,0)
 
 nnoremap <leader>rr :Run <CR>
 
-autocmd FileType java,typescript,go,cpp,h,c :call SetupYCM()
+autocmd FileType java,typescript,go,cpp,h,c,pde :call SetupYCM()
 
 autocmd FileType html,css,js,djangohtml,py,sh,lua,php :call SetupCoC()
 
