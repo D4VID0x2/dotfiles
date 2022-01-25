@@ -37,7 +37,8 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'zhimsel/vim-stay'
 
     Plug 'morhetz/gruvbox' " themes
-""    Plug 'sonph/onehalf'
+    "Plug 'sonph/onehalf'
+    Plug 'navarasu/onedark.nvim'
 
     " Plug 'ThePrimeagen/vim-be-good', {'do': './install.sh'} " vim training game
 
@@ -47,7 +48,7 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'airblade/vim-rooter' " addon for fzf, for git projects
 
     " Plug 'ycm-core/YouCompleteMe'
-    " Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
     " Better syntax highlighting
     " Python:
@@ -76,7 +77,7 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 
     " .NET C#
     Plug 'OmniSharp/omnisharp-vim'
-    " Plug 'dense-analysis/ale'
+    Plug 'dense-analysis/ale'
 
 
     " Markdown
@@ -89,35 +90,35 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 
 
 
-    " " LSP:
+    " LSP:
 
-    " " Collection of common configurations for the Nvim LSP client
-    " Plug 'neovim/nvim-lspconfig'
+    " Collection of common configurations for the Nvim LSP client
+    Plug 'neovim/nvim-lspconfig'
 
-    " " Autocompletion framework
-    " Plug 'hrsh7th/nvim-cmp'
-    " " cmp LSP completion
-    " Plug 'hrsh7th/cmp-nvim-lsp'
-    " " cmp Snippet completion
-    " Plug 'hrsh7th/cmp-vsnip'
-    " " cmp Path completion
-    " Plug 'hrsh7th/cmp-path'
-    " Plug 'hrsh7th/cmp-buffer'
-    " " See hrsh7th other plugins for more great completion sources!
+    " Autocompletion framework
+    Plug 'hrsh7th/nvim-cmp'
+    " cmp LSP completion
+    Plug 'hrsh7th/cmp-nvim-lsp'
+    " cmp Snippet completion
+    Plug 'hrsh7th/cmp-vsnip'
+    " cmp Path completion
+    Plug 'hrsh7th/cmp-path'
+    Plug 'hrsh7th/cmp-buffer'
+    " See hrsh7th other plugins for more great completion sources!
 
-    " " Adds extra functionality over rust analyzer
-    " Plug 'simrat39/rust-tools.nvim'
+    " Adds extra functionality over rust analyzer
+    Plug 'simrat39/rust-tools.nvim'
 
-    " " Snippet engine
-    " Plug 'hrsh7th/vim-vsnip'
+    " Snippet engine
+    Plug 'hrsh7th/vim-vsnip'
 
-    " " Optional
-    " Plug 'nvim-lua/popup.nvim'
-    " Plug 'nvim-lua/plenary.nvim'
-    " Plug 'nvim-telescope/telescope.nvim'
+    " Optional
+    Plug 'nvim-lua/popup.nvim'
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'nvim-telescope/telescope.nvim'
 
-    " " Some color scheme other then default
-    " Plug 'arcticicestudio/nord-vim'
+    " Some color scheme other then default
+    Plug 'arcticicestudio/nord-vim'
 
 call plug#end()
 
@@ -401,6 +402,7 @@ function! SetupLSP()
         server = {
             -- on_attach is a callback called when the language server attachs to the buffer
             -- on_attach = on_attach,
+            filestypes = { "rust" },
             settings = {
                 -- to enable rust-analyzer settings visit:
                 -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
@@ -414,22 +416,22 @@ function! SetupLSP()
         },
     })
 
-    -- require('rust-tools').setup(opts)
+    require('rust-tools').setup(opts)
 
-    nvim_lsp.pylsp.setup({
-        tools = {
-            autoSetHints = true,
-            hover_with_actions = true,
-            runnables = {
-                use_telescope = true
-            },
-            inlay_hints = {
-                show_parameter_hints = false,
-                parameter_hints_prefix = "",
-                other_hints_prefix = "",
-            },
-        },
-    })
+    -- nvim_lsp.pylsp.setup({
+    --     tools = {
+    --         autoSetHints = true,
+    --         hover_with_actions = true,
+    --         runnables = {
+    --             use_telescope = true
+    --         },
+    --         inlay_hints = {
+    --             show_parameter_hints = false,
+    --             parameter_hints_prefix = "",
+    --             other_hints_prefix = "",
+    --         },
+    --     },
+    -- })
 EOF
     autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
@@ -499,7 +501,7 @@ EOF
     nnoremap <silent> g[ <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
     nnoremap <silent> g] <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
 
-    " colorscheme nord
+    "colorscheme nord
 endfunction
 
 
@@ -600,7 +602,7 @@ autocmd FileType cs :call SetupDotnet()
 
 " autocmd FileType rust :call SetupRust()
 
-" :call SetupLSP()
+:call SetupLSP()
 
 
 
