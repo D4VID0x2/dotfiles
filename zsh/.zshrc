@@ -123,6 +123,10 @@ fi
 
 eval $(thefuck --alias)
 
+if command -v pazi &>/dev/null; then
+  eval "$(pazi init zsh)" # or 'bash'
+fi
+alias zf='z --pipe="fzf"'
 
 # Command time
 function preexec() {
