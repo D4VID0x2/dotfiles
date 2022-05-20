@@ -37,14 +37,12 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'zhimsel/vim-stay'
 
     Plug 'morhetz/gruvbox' " themes
-    "Plug 'sonph/onehalf'
     Plug 'navarasu/onedark.nvim'
-
-    " Plug 'ThePrimeagen/vim-be-good', {'do': './install.sh'} " vim training game
 
     " Fuzzy file search
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " fuzzy file finder
     Plug 'junegunn/fzf.vim'
+    Plug 'chengzeyi/fzf-preview.vim'
     Plug 'airblade/vim-rooter' " addon for fzf, for git projects
 
     " Plug 'ycm-core/YouCompleteMe'
@@ -120,10 +118,8 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     " Some color scheme other then default
     Plug 'arcticicestudio/nord-vim'
 
+
 call plug#end()
-
-
-
 
 
 
@@ -138,8 +134,7 @@ set background=dark
 
 
 
-
-let g:rooter_manual_only = 1
+"let g:rooter_manual_only = 1
 
 " run current file plugin
 let g:run_cmd_python = ['python3']
@@ -233,7 +228,6 @@ fun! SetupCoC()
         \ 'coc-css',
         \ 'coc-xml',
         \ 'coc-yaml',
-        \ 'coc-lua',
         \ ]
 endfun
 
@@ -600,9 +594,7 @@ autocmd FileType html,css,js,djangohtml,py,sh,lua,php :call SetupCoC()
 
 autocmd FileType cs :call SetupDotnet()
 
-" autocmd FileType rust :call SetupRust()
-
-:call SetupLSP()
+":call SetupLSP()
 
 
 
@@ -626,7 +618,7 @@ nnoremap <silent> <leader>- :vertical resize -5<CR>
 nnoremap <silent> <leader>* :resize +5<CR>
 nnoremap <silent> <leader>/ :resize -5<CR>
 
-nnoremap <silent> <leader>fgf :GFiles<CR>
+nnoremap <silent> <leader>fg :GFiles<CR>
 nnoremap <silent> <leader>ff :Files<CR>
 
 vnoremap <leader>p "_dP
