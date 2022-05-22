@@ -45,13 +45,8 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'chengzeyi/fzf-preview.vim' " fzf preview for more things
     Plug 'airblade/vim-rooter' " addon for fzf, for git projects
 
-    " Snippets
-    " Plug 'sirver/ultisnips'
-    " Plug 'honza/vim-snippets'
-    " Plug 'ervandew/supertab'
-
     " Show git modifications to file
-    Plug 'vim-scripts/vim-gitgutter'
+    "Plug 'vim-scripts/vim-gitgutter'
 
     Plug 'sbdchd/vim-run' " run current file
 
@@ -70,8 +65,8 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 
     Plug 'hrsh7th/nvim-cmp' " Autocompletion framework
     Plug 'hrsh7th/cmp-nvim-lsp' " cmp LSP completion
-    Plug 'hrsh7th/cmp-vsnip' " cmp Snippet completion
-    Plug 'hrsh7th/vim-vsnip' " Snippet engine
+    Plug 'saadparwaiz1/cmp_luasnip' " Snippets
+    Plug 'L3MON4D3/LuaSnip'
     Plug 'hrsh7th/cmp-path' " cmp Path completion
     Plug 'hrsh7th/cmp-buffer'
 
@@ -89,7 +84,6 @@ set background=dark
 
 
 " PLUGIN CONFIGURATION:
-
 " run current file plugin
 let g:run_cmd_python = ['python3']
 let g:run_split = 'right'
@@ -105,7 +99,6 @@ let g:markdown_minlines = 100
 
 
 " LSP:
-
 " Set completeopt to have a better completion experience
 " :help completeopt
 " menuone: popup even when there's only one match
@@ -172,27 +165,46 @@ for _, lsp in ipairs(servers) do
   }
 end
 
+-- luasnip setup
+local luasnip = require 'luasnip'
+
 -- Setup Completion
 -- See https://github.com/hrsh7th/nvim-cmp#basic-configuration
 local cmp = require'cmp'
 cmp.setup({
   snippet = {
     expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body)
+      luasnip.lsp_expand(args.body)
     end,
   },
   mapping = {
     ['<C-n>'] = cmp.mapping.select_next_item(),
     ['<C-p>'] = cmp.mapping.select_prev_item(),
     -- Add tab support
-    ['<Tab>'] = cmp.mapping.select_next_item(),
-    ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+    ['<Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
     ['<C-u>'] = cmp.mapping.scroll_docs(-4),
     ['<C-d>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.close(),
     ['<CR>'] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Insert,
+      behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     })
   },
@@ -200,7 +212,7 @@ cmp.setup({
   -- Installed sources
   sources = {
     { name = 'nvim_lsp' },
-    { name = 'vsnip' },
+    { name = 'luasnip' },
     { name = 'path' },
     { name = 'buffer' },
   },
@@ -256,7 +268,6 @@ function! Hashbang(portable, permission, RemExt)
         endif
     endif
 endfunction
-
 
 
 
@@ -323,11 +334,10 @@ nnoremap Y y$
 " Number 4: Keeping it centered
 nnoremap n nzzzv
 nnoremap N Nzzzv
-" nnoremap J mzJ`z
 
 " Number 3: Undo break points
-inoremap , ,<c-g>u
 inoremap . .<c-g>u
+inoremap , ,<c-g>u
 inoremap ! !<c-g>u
 inoremap ? ?<c-g>u
 inoremap _ _<c-g>u
