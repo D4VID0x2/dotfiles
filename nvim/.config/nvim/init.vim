@@ -320,10 +320,6 @@ nnoremap <silent> <leader>ff :Files<CR>
 
 vnoremap <leader>p "_dP
 
-inoremap <C-_>:call NERDComment(0,"toggle")<CR>
-nnoremap <C-_>:call NERDComment(0,"toggle")<CR>
-
-
 
 
 " MUST HAVE VIM REMAPS:
