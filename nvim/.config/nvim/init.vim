@@ -57,10 +57,11 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     " LSP:
     " Collection of common configurations for the Nvim LSP client
     Plug 'neovim/nvim-lspconfig'
-    Plug 'williamboman/nvim-lsp-installer' " Automaticlly install language server
     " Optional
+    Plug 'williamboman/nvim-lsp-installer' " Automaticlly install language server
     Plug 'nvim-lua/popup.nvim'
     Plug 'nvim-lua/plenary.nvim'
+    Plug 'nvim-treesitter/nvim-treesitter'
     Plug 'nvim-telescope/telescope.nvim'
 
     Plug 'hrsh7th/nvim-cmp' " Autocompletion framework
