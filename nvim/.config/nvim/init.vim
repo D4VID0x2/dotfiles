@@ -43,7 +43,7 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " fuzzy file finder
     Plug 'junegunn/fzf.vim'
     Plug 'chengzeyi/fzf-preview.vim' " fzf preview for more things
-    Plug 'airblade/vim-rooter' " addon for fzf, for git projects
+    Plug 'airblade/vim-rooter'
 
     " Show git modifications to file
     "Plug 'vim-scripts/vim-gitgutter'
@@ -73,6 +73,12 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     " Adds extra functionality over rust analyzer
     Plug 'simrat39/rust-tools.nvim'
 
+    " Better python sytax highlighting
+    Plug 'numirias/semshi'
+
+    " LaTeX support
+    Plug 'vim-latex/vim-latex'
+
 call plug#end()
 
 
@@ -95,7 +101,12 @@ let g:vim_http_split_vertically = 1
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'xml', 'javascript', 'json', 'asm', 'cs']
 let g:markdown_minlines = 100
 
+" Vim rooter
+"let g:rooter_manual_only = 1
+let g:rooter_patterns = ['_darcs', '.hg', '.bzr', '.svn', '*.csproj', '*.sln', 'Makefile', 'package.json', '.git']
 
+let g:python_host_prog = '/usr/bin/python2'
+let g:python3_host_prog = '/usr/bin/python3'
 
 
 " LSP:
@@ -157,6 +168,7 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- Setup language servers
 local nvim_lsp = require('lspconfig')
+--local servers = { 'clangd', 'rust_analyzer', 'jedi_language_server', 'csharp_ls', 'html' }
 local servers = { 'clangd', 'rust_analyzer', 'pyright', 'csharp_ls', 'html' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
