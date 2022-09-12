@@ -78,7 +78,7 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'numirias/semshi'
 
     " LaTeX support
-    Plug 'vim-latex/vim-latex'
+    " Plug 'vim-latex/vim-latex'
 
 call plug#end()
 
@@ -169,8 +169,7 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- Setup language servers
 local nvim_lsp = require('lspconfig')
---local servers = { 'clangd', 'rust_analyzer', 'jedi_language_server', 'csharp_ls', 'html' }
-local servers = { 'clangd', 'rust_analyzer', 'pyright', 'csharp_ls', 'html' }
+local servers = { 'clangd', 'rust_analyzer', 'pyright', 'csharp_ls', 'html', 'cssls', 'texlab'}
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
