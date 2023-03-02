@@ -17,6 +17,6 @@ fi
 export PATH=$PATH:$HOME/.cargo/bin
 export PATH=$PATH:$HOME/.pub-cache/bin
 
-source "$HOME/.cargo/env"
+#source "$HOME/.cargo/env"
 
 tmux
