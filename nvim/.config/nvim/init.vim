@@ -99,7 +99,7 @@ let g:run_split = 'right'
 let g:vim_http_split_vertically = 1
 
 " Markdown
-let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'xml', 'javascript', 'json', 'asm', 'cs']
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'xml', 'javascript', 'json', 'asm', 'cs', 'c', 'cpp']
 let g:markdown_minlines = 100
 
 " Vim rooter
@@ -153,7 +153,7 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  buf_set_keymap('n', '<space>=', '<cmd>lua vim.lsp.buf.format { async = true }<CR>', opts)
 
 end
 
@@ -169,12 +169,20 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- Setup language servers
 local nvim_lsp = require('lspconfig')
-local servers = { 'clangd', 'rust_analyzer', 'pyright', 'csharp_ls', 'html', 'cssls', 'texlab'}
-for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
+local servers = { 'clangd', 'rust_analyzer', 'pyright', 'omnisharp', 'html', 'cssls', 'texlab', 'tsserver'}
+for _, server in ipairs(servers) do
+  local config = {
     on_attach = on_attach,
     capabilities = capabilities,
   }
+
+  if server == "omnisharp" then
+    local pid = vim.fn.getpid()
+    local omnisharp_bin = '~/.local/share/nvim/lsp_servers/omnisharp/omnisharp/OmniSharp'
+    config.cmd = { omnisharp_bin, "--languageserver" , "--hostPID", tostring(pid) }
+  end
+
+  nvim_lsp[server].setup(config)
 end
 
 -- luasnip setup
