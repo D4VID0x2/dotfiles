@@ -17,7 +17,6 @@ alias free='free -m'
 alias p="nocorrect sudo pacman"
 alias sc="sudo systemctl"
 alias psg="nocorrect ps aux | grep"
-alias nv='nvim'
 #alias suod='sudo'
 
 # git

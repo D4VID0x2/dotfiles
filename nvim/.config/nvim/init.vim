@@ -75,7 +75,7 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'simrat39/rust-tools.nvim'
 
     " Better python sytax highlighting
-    Plug 'numirias/semshi'
+    "Plug 'numirias/semshi'
 
     " LaTeX support
     " Plug 'vim-latex/vim-latex'
@@ -169,7 +169,7 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- Setup language servers
 local nvim_lsp = require('lspconfig')
-local servers = { 'clangd', 'rust_analyzer', 'pyright', 'omnisharp', 'html', 'cssls', 'texlab', 'tsserver'}
+local servers = { 'clangd', 'rust_analyzer', 'pyright', 'omnisharp', 'html', 'cssls', 'texlab', 'gopls', 'tsserver'}
 for _, server in ipairs(servers) do
   local config = {
     on_attach = on_attach,
