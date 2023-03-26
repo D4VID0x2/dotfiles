@@ -112,7 +112,7 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8"
 bindkey '^ ' autosuggest-accept  # accept suggestion with ctrl-space
 
 export EDITOR='nvim'
-export TERM=screen-256color
+export TERM=xterm-256color
 export PATH=$PATH:/home/david/.local/bin:/home/david/.dotnet/tools
 
 if [ -f ~/.config/shell_aliases ]; then
