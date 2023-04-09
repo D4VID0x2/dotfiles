@@ -66,16 +66,19 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 
     Plug 'hrsh7th/nvim-cmp' " Autocompletion framework
     Plug 'hrsh7th/cmp-nvim-lsp' " cmp LSP completion
-    Plug 'saadparwaiz1/cmp_luasnip' " Snippets
-    Plug 'L3MON4D3/LuaSnip'
     Plug 'hrsh7th/cmp-path' " cmp Path completion
     Plug 'hrsh7th/cmp-buffer'
+    Plug 'saadparwaiz1/cmp_luasnip' " Snippets
+    Plug 'L3MON4D3/LuaSnip'
+
+    Plug 'stevearc/aerial.nvim' " Code outline window
+
 
     " Adds extra functionality over rust analyzer
     Plug 'simrat39/rust-tools.nvim'
 
     " Better python sytax highlighting
-    "Plug 'numirias/semshi'
+    Plug 'numirias/semshi'
 
     " LaTeX support
     " Plug 'vim-latex/vim-latex'
@@ -146,9 +149,9 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
   buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
   buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+  --buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+  --buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+  --buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
   buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
   buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
@@ -237,6 +240,17 @@ cmp.setup({
     { name = 'buffer' },
   },
 })
+
+require('aerial').setup({
+  -- optionally use on_attach to set keymaps when aerial has attached to a buffer
+  on_attach = function(bufnr)
+    -- Jump forwards/backwards with '{' and '}'
+    vim.keymap.set('n', '[m', '<cmd>AerialPrev<CR>', {buffer = bufnr})
+    vim.keymap.set('n', ']m', '<cmd>AerialNext<CR>', {buffer = bufnr})
+  end
+})
+-- You probably also want to set a keymap to toggle aerial
+vim.keymap.set('n', '<leader>a', '<cmd>AerialToggle!<CR>')
 EOF
 
 " have a fixed column for the diagnostics to appear in
