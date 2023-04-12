@@ -78,7 +78,7 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'simrat39/rust-tools.nvim'
 
     " Better python sytax highlighting
-    Plug 'numirias/semshi'
+    Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' }
 
     " LaTeX support
     " Plug 'vim-latex/vim-latex'
