@@ -48,6 +48,8 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     " Show git modifications to file
     "Plug 'vim-scripts/vim-gitgutter'
 
+    Plug 'duane9/nvim-rg'
+
     Plug 'sbdchd/vim-run' " run current file
 
     Plug 'octol/vim-cpp-enhanced-highlight'
