@@ -10,6 +10,7 @@ vim.opt.relativenumber = true -- relative line numbers
 vim.opt.wrap = true -- wrap lines
 vim.opt.smartcase = true
 vim.opt.mouse = ""
+vim.opt.clipboard = ""
 
 
 lvim.plugins = {
