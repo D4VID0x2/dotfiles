@@ -25,10 +25,8 @@ LV_BRANCH='release-1.3/neovim-0.9' bash <(curl -s https://raw.githubusercontent.
 
 
 # dotfiles
-cd ~
-git clone https://github.com:D4VIDB2/dotfiles.git .dotfiles
 cd .dotfiles
-rm ~/.bashrc; stow --no-filding bash
-rm ~/.tmux.conf; stow --no-filding tmux
-rm ~/.zshrc; stow --no-filding zsh
-stow --no-filding lvim
+rm ~/.bashrc; stow --no-folding bash
+rm ~/.tmux.conf; stow --no-folding tmux
+rm ~/.zshrc; stow --no-folding zsh
+stow --no-folding lvim
