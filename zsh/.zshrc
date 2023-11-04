@@ -111,7 +111,7 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8"
 
 bindkey '^ ' autosuggest-accept  # accept suggestion with ctrl-space
 
-export EDITOR='nvim'
+export EDITOR='lvim'
 export TERM=screen-256color
 export PATH=$PATH:/home/david/.local/bin:/home/david/.dotnet/tools
 
