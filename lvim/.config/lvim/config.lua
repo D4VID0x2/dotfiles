@@ -12,10 +12,27 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.mouse = ""
 vim.opt.clipboard = ""
+vim.opt.showcmd = true
 
 
+-- Setup Lualine statusline
+local components = require "lvim.core.lualine.components"
+lvim.builtin.lualine.sections.lualine_a = { "mode", }
+lvim.builtin.lualine.sections.lualine_b = { components.branch, }
+lvim.builtin.lualine.sections.lualine_c = { components.diff, components.python_env, components.filename, }
+lvim.builtin.lualine.sections.lualine_x = { components.diagnostics, components.lsp, components.filetype, }
+lvim.builtin.lualine.sections.lualine_y = { components.location, }
+lvim.builtin.lualine.sections.lualine_z = { components.progress, }
+
+
+-- Setup useful functions
+vim.cmd('source ~/.config/lvim/user.vim')
+
+
+-- Add extra plugins
 lvim.plugins = {
-  { "octol/vim-cpp-enhanced-highlight" }
+  { "octol/vim-cpp-enhanced-highlight" },
+  { "zhimsel/vim-stay" }
 }
 
 
