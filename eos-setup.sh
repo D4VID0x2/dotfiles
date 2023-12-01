@@ -7,7 +7,7 @@ yay -Sy vim neovim tmux zsh bat gparted gimp htop libreoffice-fresh wireshark-qt
 # yay -Sy plasma-wayland-session plasma-systemmonitor --needed --noconfirm
 
 # gnome
-yay -Sy gnome-terminal gnome-tweaks gnome-browser-connector flat-remix-gtk flat-remix-gnome thunar --needed --noconfirm
+yay -Sy gnome-terminal gnome-tweaks gnome-browser-connector flat-remix-gtk flat-remix-gnome thunar evolution --needed --noconfirm
 
 # fonts
 yay -Sy ttf-noto-nerd noto-color-emoji-fontconfig noto-fonts-emoji --needed --noconfirm
