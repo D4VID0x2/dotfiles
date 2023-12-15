@@ -10,7 +10,7 @@ alias more='less'
 alias ..='cd ..'
 alias cp='cp -iv'
 alias mv='mv -iv'
-alias rm='rm -v'
+alias rm='rm -vI'
 alias free='free -m'
 
 #alias ccat="highlight --out-format=ansi"
