@@ -1,22 +1,27 @@
 #!/usr/bin/env bash
 
 # main packages
-yay -Sy vim neovim tmux zsh plasma-wayland-session plasma-systemmonitor gparted gimp htop libreoffice-fresh wireshark-qt chromium stow exa thefuck xclip --needed
+yay -Sy vim neovim tmux zsh bat gparted gimp htop libreoffice-fresh wireshark-qt chromium stow exa thefuck xclip plasma-wayland-session plasma-systemmonitor --needed --noconfirm
+
+# fonts
+yay -Sy ttf-noto-nerd noto-color-emoji-fontconfig noto-fonts-emoji --needed --noconfirm
 
 # extra packages
-yay -Sy dotnet-runtime dotnet-sdk aspnet-runtime grub-customizer xournalpp rustup cargo lazygit --needed
+yay -Sy dotnet-runtime dotnet-sdk aspnet-runtime grub-customizer xournalpp rustup cargo lazygit --needed --noconfirm
 
 # autorotation on tablet
-yay -Sy iio-sensor-proxy --needed
+yay -Sy iio-sensor-proxy --needed --noconfirm
 
 # AUR packages
-yay -Sy pazi spotify tty-clock tuxy-git members --needed
+yay -Sy pazi spotify tty-clock tuxy-git members --needed --noconfirm
 
+rustup default stable
 
 # oh my zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" &&
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting &&
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+git clone --depth 1 https://github.com/unixorn/fzf-zsh-plugin.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fzf-zsh-plugin
 
 
 # LunarVim
