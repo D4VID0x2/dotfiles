@@ -1,0 +1,42 @@
+# color
+alias ls='ls --color=auto --group-directories-first'
+alias grep='grep --color=auto'
+alias ip='ip -color=auto'
+
+#alias la='ls -lahF'
+alias xclip='xclip -selection clipboard'
+alias xpaste='xclip -o -selection clipboard'
+alias more='less'
+alias ..='cd ..'
+alias cp='cp -iv'
+alias mv='mv -iv'
+alias rm='rm -v'
+alias free='free -m'
+
+#alias ccat="highlight --out-format=ansi"
+alias p="nocorrect sudo pacman"
+alias sc="sudo systemctl"
+alias psg="nocorrect ps aux | grep"
+#alias suod='sudo'
+
+# git
+alias g='git'
+alias gst='git status'
+alias gdiff='git diff'
+alias gl='git pull'
+alias gp='git push'
+alias gc='git commit -v'
+alias gca='git commit -v -a'
+alias gcm='git commit -m'
+alias gcam='git commit -a -m'
+alias gco='git checkout'
+alias gb='git branch'
+alias ga='git add'
+
+
+alias batman="MANPAGER=\"sh -c 'col -bx | bat -l man -p'\" man"
+alias la='exa -laag --group-directories-first'
+
+alias nvimconf='nvim ~/.config/nvim/init.vim'
+alias udb='sudo updatedb'
+alias wettr='curl https://wttr.in/Prague'
