@@ -17,6 +17,8 @@ fi
 export PATH=$PATH:$HOME/.cargo/bin
 export PATH=$PATH:$HOME/.pub-cache/bin
 
+export EDITOR='lvim'
+
 #source "$HOME/.cargo/env"
 
 tmux

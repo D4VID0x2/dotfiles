@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # main packages
-yay -Sy vim neovim tmux zsh bat gparted gimp htop libreoffice-fresh wireshark-qt chromium stow exa thefuck xclip plasma-wayland-session plasma-systemmonitor --needed --noconfirm
+yay -Sy vim neovim tmux zsh bat gparted gimp htop libreoffice-fresh wireshark-qt chromium discord stow exa thefuck xclip --needed --noconfirm
 
 # fonts
 yay -Sy ttf-noto-nerd noto-color-emoji-fontconfig noto-fonts-emoji --needed --noconfirm
@@ -25,7 +25,7 @@ git clone --depth 1 https://github.com/unixorn/fzf-zsh-plugin.git ${ZSH_CUSTOM:-
 
 
 # LunarVim
-yay -Sy python-pynvim
+yay -Sy python-pynvim --needed --noconfirm
 LV_BRANCH='release-1.3/neovim-0.9' bash <(curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/release-1.3/neovim-0.9/utils/installer/install.sh)
 
 
@@ -33,4 +33,4 @@ LV_BRANCH='release-1.3/neovim-0.9' bash <(curl -s https://raw.githubusercontent.
 rm ~/.bashrc; stow --no-folding bash
 rm ~/.tmux.conf; stow --no-folding tmux
 rm ~/.zshrc; stow --no-folding zsh
-stow --no-folding lvim
+rm ~/.config/lvim/config.lua; stow --no-folding lvim
