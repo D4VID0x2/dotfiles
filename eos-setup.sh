@@ -3,6 +3,12 @@
 # main packages
 yay -Sy vim neovim tmux zsh bat gparted gimp htop libreoffice-fresh wireshark-qt chromium discord stow exa thefuck xclip --needed --noconfirm
 
+# plasma
+# yay -Sy plasma-wayland-session plasma-systemmonitor --needed --noconfirm
+
+# gnome
+yay -Sy gnome-terminal gnome-tweaks gnome-browser-connector flat-remix-gtk flat-remix-gnome thunar --needed --noconfirm
+
 # fonts
 yay -Sy ttf-noto-nerd noto-color-emoji-fontconfig noto-fonts-emoji --needed --noconfirm
 
@@ -34,3 +40,9 @@ rm ~/.bashrc; stow --no-folding bash
 rm ~/.tmux.conf; stow --no-folding tmux
 rm ~/.zshrc; stow --no-folding zsh
 rm ~/.config/lvim/config.lua; stow --no-folding lvim
+
+
+
+
+# extras
+ln -s /mnt/SSD_DATA ~/SSD_DATA
