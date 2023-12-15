@@ -8,6 +8,7 @@ vim.opt.tabstop = 4 -- insert 4 spaces for a tab
 vim.opt.softtabstop = 4 -- insert 4 spaces for a tab
 vim.opt.relativenumber = true -- relative line numbers
 vim.opt.wrap = true -- wrap lines
+vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.mouse = ""
 vim.opt.clipboard = ""
