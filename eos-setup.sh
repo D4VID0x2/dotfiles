@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # main packages
-yay -Sy vim neovim tmux zsh bat gparted gimp htop libreoffice-fresh wireshark-qt chromium discord vlc stow exa thefuck xclip gvfs-goa --needed --noconfirm
+yay -Sy vim neovim tmux zsh bat gparted gimp htop libreoffice-fresh wireshark-qt chromium discord vlc stow exa thefuck xclip gvfs-goa thunar-archive-plugin --needed --noconfirm
 
 # plasma
 # yay -Sy plasma-wayland-session plasma-systemmonitor --needed --noconfirm
