@@ -40,3 +40,5 @@ alias la='exa -laag --group-directories-first'
 alias nvimconf='nvim ~/.config/nvim/init.vim'
 alias udb='sudo updatedb'
 alias wettr='curl https://wttr.in/Prague'
+
+alias lmao='mkdir -p /tmp/lmao && cd /tmp/lmao'
